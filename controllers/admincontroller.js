@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../Model/user');
-// var Product = require('../Model/product');
+var Product = require('../Model/product');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var app = express();
@@ -63,133 +63,131 @@ router.post('/profile', (req, res) => {
     });
 });
 
-//  ====================================User List=======================================//
-// router.post('/userlist', (req, response, next) => {
-//     console.log(req.body);
-//     User.find().then(docs => {
+// ====================================User List=======================================//
+router.post('/userlist', (req, response, next) => {
+    console.log(req.body);
+    User.find().then(docs => {
 
-//         response.status(200).json(docs);
-//     }).catch(err => {
-//         console.log(err);
-//         response.status(500).json({ error: err });
-//     })
-// });
+        response.status(200).json(docs);
+    }).catch(err => {
+        console.log(err);
+        response.status(500).json({ error: err });
+    })
+});
 
-// //========================================User Edit=======================================//
-// router.post('/useredit', (req, res) => {
-//     User.findById(req.body._id, (err, doc) => {
-//         if (!err) {
-//             res.json(doc);
-//         }
-//     });
-// });
-
-
-// //=====================================Delete User=========================================// 
-// router.post('/userdelete', (req, res) => {
-//     User.findByIdAndRemove(req.body._id).then(result => {
-//         console.log(result);
-//         res.status(201).json({
-//             message: "Delete Succefully"
-//         })
-//     })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 message: err
-//             })
-//         })
-// });
+//========================================User Edit=======================================//
+router.post('/useredit', (req, res) => {
+    User.findById(req.body._id, (err, doc) => {
+        if (!err) {
+            res.json(doc);
+        }
+    });
+});
 
 
-// //=====================================Single Product=========================================// 
-// router.post('/product', (req, res) => {
-//     User.findOne({
-//         _id: req.body._id
-//     }, function (err, user) {
-//         if (err) {
-//             res.json({ 'Success': 'Post Failed' });
-//         }
-//         else if (User.admin = true) {
-//             var product = new Product();
-//             product.productname = req.body.productnassssssme;
-//             product.price = req.body.price;
-//             product.brand = req.body.brand;
-//             product.madein = req.body.madein;
-//             product.image = req.body.image;
-//             product.description = req.body.description;
-//             product.feedid = req.body.feedid;
-//             product.save((err, doc) => {
-//                 if (err) {
-//                     console.log('Error during record insertion : ' + err);
-//                 } else {
-//                     res.json({ 'Success': 'Product Added' });
-//                 }
-//             });
-//             console.log(product);
-//         }
+//=====================================Delete User=========================================// 
+router.post('/userdelete', (req, res) => {
+    User.findByIdAndRemove(req.body._id).then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: "Delete Succefully"
+        })
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: err
+            })
+        })
+});
+//=====================================Single Product=========================================// 
+router.post('/product', (req, res) => {
+    User.findOne({
+        _id: req.body._id
+    }, function (err, user) {
+        if (err) {
+            res.json({ 'Success': 'Post Failed' });
+        }
+        else if (User.admin = true) {
+            var product = new Product();
+            product.productname = req.body.productname;
+            product.price = req.body.price;
+            product.brand = req.body.brand;
+            product.madein = req.body.madein;
+            product.image = req.body.image;
+            product.description = req.body.description;
+            product.feedid = req.body.feedid;
+            product.save((err, doc) => {
+                if (err) {
+                    console.log('Error during record insertion : ' + err);
+                } else {
+                    res.json({ 'Success': 'Product Added' });
+                }
+            });
+            console.log(product);
+        }
 
-//     });
+    });
 
-// });
-// //========================================Product Edit=======================================//
-// router.post('/productlist', (req, response, next) => {
-//     console.log(req.body);
-//     Product.find().populate('user').sort({ '_id': -1 }).exec(function (err, docs) {
-//         if (err) return callback(err);
-//         response.json(docs);
-//     })
-// })
-// //=====================================Delete Product=========================================// 
-// router.post('/productdelete', (req, res) => {
-//     Product.findByIdAndRemove(req.body._id).then(result => {
-//         console.log(result);
-//         res.status(201).json({
-//             message: "Delete Succefully"
-//         })
-//     })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 message: err
-//             })
-//         })
-// });
-// // ====================================Update Product=======================================//
-// router.put('/productupdate', (req, res) => {
-//     Product.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
-//         if (!err) {
-//             res.json({ 'Success': 'Profile Updated Successfully!!', 'username': doc.username });
-//         } else {
-//             console.log('Error during record update : ' + err);
-//         }
-//     });
-// });
-// router.post('/contactlist', (req, response, next) => {
-//     console.log(req.body);
-//     Contact.find().then(docs => {
+});
+//========================================Product Edit=======================================//
+router.post('/productlist', (req, response, next) => {
+    console.log(req.body);
+    Product.find().populate('user').sort({ '_id': -1 }).exec(function (err, docs) {
+        if (err) return callback(err);
+        response.json(docs);
+    })
+})
+//=====================================Delete Product=========================================// 
+router.post('/productdelete', (req, res) => {
+    Product.findByIdAndRemove(req.body._id).then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: "Delete Succefully"
+        })
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: err
+            })
+        })
+});
+// ====================================Update Product=======================================//
+router.put('/productupdate', (req, res) => {
+    Product.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+        if (!err) {
+            res.json({ 'Success': 'Profile Updated Successfully!!', 'username': doc.username });
+        } else {
+            console.log('Error during record update : ' + err);
+        }
+    });
+});
+router.post('/contactlist', (req, response, next) => {
+    console.log(req.body);
+    Contact.find().then(docs => {
 
-//         response.status(200).json(docs);
-//     }).catch(err => {
-//         console.log(err);
-//         response.status(500).json({ error: err });
-//     })
-// });
+        response.status(200).json(docs);
+    }).catch(err => {
+        console.log(err);
+        response.status(500).json({ error: err });
+    })
+});
 
-// //=====================================Delete Contact=========================================// 
-// router.post('/contactdelete', (req, res) => {
-//     Contact.findByIdAndRemove(req.body._id).then(result => {
-//         console.log(result);
-//         res.status(201).json({
-//             message: "Delete Succefully"
-//         })
-//     })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 message: err
-//             })
-//         })
-// });
+//=====================================Delete Contact=========================================// 
+router.post('/contactdelete', (req, res) => {
+    Contact.findByIdAndRemove(req.body._id).then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: "Delete Succefully"
+        })
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: err
+            })
+        })
+});
 
 module.exports = router;

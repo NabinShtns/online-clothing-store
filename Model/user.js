@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-//var Product = require('./product');
+var Product = require('./product');
 
 // set up a mongoose model
 
@@ -17,9 +17,9 @@ module.exports = mongoose.model('User', new Schema({
         type: String,
         default: "user.png",
     },
-    // cart: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: Product
-    // }]
+    cart: [{
+        type: Schema.Types.ObjectId,
+        ref: Product
+    }]
 
 }));
